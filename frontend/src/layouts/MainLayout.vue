@@ -19,7 +19,7 @@
           <el-sub-menu v-if="route.children && route.children.length > 0" :index="route.path">
             <template #title>
               <el-icon>
-                <component :is="route.meta?.icon" />
+                <component :is="iconMap[route.meta?.icon as string] || House" />
               </el-icon>
               <span>{{ route.meta?.title }}</span>
             </template>
@@ -29,7 +29,7 @@
           </el-sub-menu>
           <el-menu-item v-else :index="route.path">
             <el-icon>
-              <component :is="route.meta?.icon" />
+              <component :is="iconMap[route.meta?.icon as string] || House" />
             </el-icon>
             <span>{{ route.meta?.title }}</span>
           </el-menu-item>
@@ -86,7 +86,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { Fold, Expand, ArrowDown } from '@element-plus/icons-vue'
+import { Fold, Expand, ArrowDown, House, OfficeBuilding, Box, MagicStick, Tools, User, DataLine, ChatDotRound, Setting } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStore } from '@/store/user'
 import type { RouteRecordNormalized } from 'vue-router'
@@ -96,6 +96,18 @@ const userStore = useUserStore()
 const isCollapse = ref(false)
 
 const userInfo = computed(() => userStore.userInfo)
+
+const iconMap: Record<string, any> = {
+  House,
+  OfficeBuilding,
+  Box,
+  MagicStick,
+  Tools,
+  User,
+  DataLine,
+  ChatDotRound,
+  Setting
+}
 
 // 获取菜单路由
 const menuRoutes = computed(() => {
